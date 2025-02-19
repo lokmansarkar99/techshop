@@ -59,7 +59,7 @@ const router = createBrowserRouter([
       { path: "/checkout", element: <Checkout /> },
       { path: "/orders", element: <Orders /> }, // Protected Route
       { path: "/login", element: <Login /> },
-      { path: "/register", element: <Register /> },
+      { path: "/signup", element: <Register /> },
       { path: "/user", element: <UserProfile /> },
       { path: "*", element: <NotFound /> }, // 404 Page
     ],

@@ -73,13 +73,13 @@ export const updateUser = async (req, res) => {
     if (name) {
       user.name = name;
     }
-    if (email) {
-      const emailExists = await User.findOne({ email });
-      if (emailExists) {
-        return res.status(400).json({ message: 'Email already in use' });
-      }
-      user.email = email;
-    }
+    // if (email) {
+    //   const emailExists = await User.findOne({ email });
+    //   if (emailExists) {
+    //     return res.status(400).json({ message: 'Email already in use' });
+    //   }
+    //   user.email = email;
+    // }
 
     // Update Password (if provided)
     if (password) {
