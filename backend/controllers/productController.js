@@ -1,5 +1,6 @@
 import Product from '../models/productModel.js';
 import { protect, isAdmin } from '../middleware/authMiddleware.js';
+import fs from 'fs'
 
 // Create a new product (Admin only)
 // export const createProduct = async (req, res) => {
@@ -77,20 +78,54 @@ export const getProductById = async (req, res) => {
 };
 
 // Update a product (Admin only)
+
+// export const updateProduct = async (req, res) => {
+//   const { id } = req.params;
+//   try {
+//     const updatedProduct = await Product.findByIdAndUpdate(id, req.body, { new: true });
+
+//     if (!updatedProduct) {
+//       return res.status(404).json({ message: 'Product not found' });
+//     }
+
+//     res.json(updatedProduct);
+//   } catch (error) {
+//     res.status(500).json({ message: 'Failed to update product', error });
+//   }
+// };
 export const updateProduct = async (req, res) => {
   const { id } = req.params;
-  try {
-    const updatedProduct = await Product.findByIdAndUpdate(id, req.body, { new: true });
 
+  try {
+    let updatedData = { ...req.body };
+
+    if (req.file) {
+      const imagePath = `/uploads/${req.file.filename}`;
+      updatedData.image = imagePath;
+
+      // পুরোনো ইমেজ ডিলিট করা হবে
+      const product = await Product.findById(id);
+      if (product && product.image) {
+        const oldImagePath = `.${product.image}`;
+        if (fs.existsSync(oldImagePath)) {
+          fs.unlinkSync(oldImagePath);
+        }
+      }
+    }
+
+    const updatedProduct = await Product.findByIdAndUpdate(id, updatedData, { new: true });
     if (!updatedProduct) {
-      return res.status(404).json({ message: 'Product not found' });
+      return res.status(404).json({ message: "Product not found" });
     }
 
     res.json(updatedProduct);
   } catch (error) {
-    res.status(500).json({ message: 'Failed to update product', error });
+    console.error("Error updating product:", error);
+    res.status(500).json({ message: "Failed to update product", error });
   }
 };
+
+
 
 // Delete a product (Admin only)
 export const deleteProduct = async (req, res) => {

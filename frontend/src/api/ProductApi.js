@@ -55,6 +55,7 @@ export const updateProduct = async (id, updatedData, token) => {
   try {
     const response = await api.put(`/products/${id}`, updatedData, {
       headers: {
+        "Content-Type": "multipart/form-data",
         Authorization: `Bearer ${token}`, // Admin token required for this action
       },
     });

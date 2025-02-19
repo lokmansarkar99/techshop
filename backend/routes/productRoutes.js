@@ -11,7 +11,7 @@ router.get('/:id', getProductById);     // Get a single product by ID
 
 // Protected routes (Admin only)
 router.post('/', protect, isAdmin, upload.single("image"), createProduct);  // Admin only
-router.put('/:id', protect, isAdmin, updateProduct);  // Admin only
-router.delete('/:id', protect, isAdmin, deleteProduct);  // Admin only
+router.put('/:id', protect, isAdmin, upload.single("image") ,  updateProduct);  // Admin only
+router.delete('/:id', protect, isAdmin,  deleteProduct);  // Admin only
 
 export default router;

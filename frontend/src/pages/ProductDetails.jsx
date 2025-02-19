@@ -3,10 +3,14 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 
 const ProductDetails = () => {
+ const apiBaseUrl = import.meta.env.VITE_API_URL
+
   const { id } = useParams(); // Get product ID from URL
   const [product, setProduct] = useState(null);
   const [loading, setLoading] = useState(true);
   const api = import.meta.env.VITE_API_URL; // API URL from .env
+
+  // const  {name, price, description, image} = product
 
   useEffect(() => {
     const fetchProduct = async () => {
@@ -37,7 +41,7 @@ const ProductDetails = () => {
         {/* Product Image */}
         <div className="flex justify-center">
           <img
-            src={product.image}
+            src={`${apiBaseUrl}${product.image}`}
             alt={product.name}
             className="w-full max-w-sm rounded-lg shadow-lg object-cover"
           />

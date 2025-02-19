@@ -10,8 +10,8 @@ const EditProduct = () => {
   const [product, setProduct] = useState({
     name: "",
     price: "",
-    image: "",
   });
+  const [image, setImage] = useState(null);
   const [message, setMessage] = useState("");
 
   useEffect(() => {
@@ -21,7 +21,6 @@ const EditProduct = () => {
         setProduct({
           name: data.name,
           price: data.price,
-          image: data.image,
         });
       } catch (error) {
         console.error("Error fetching product:", error);
@@ -34,12 +33,23 @@ const EditProduct = () => {
     setProduct({ ...product, [e.target.name]: e.target.value });
   };
 
+  const handleImageChange = (e) => {
+    setImage(e.target.files[0]);
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     setMessage("");
 
+    const formData = new FormData();
+    formData.append("name", product.name);
+    formData.append("price", product.price);
+    if (image) {
+      formData.append("image", image);
+    }
+
     try {
-      await updateProduct(productId, product, token);
+      await updateProduct(productId, formData, token);
       setMessage("Product updated successfully!");
       setTimeout(() => navigate("/admin/products"), 1500);
     } catch (error) {
@@ -51,7 +61,7 @@ const EditProduct = () => {
   return (
     <div className="p-5">
       <h1 className="text-2xl font-bold mb-4">Edit Product</h1>
-      <form onSubmit={handleSubmit} className="space-y-4 bg-white p-6 rounded shadow-md">
+      <form onSubmit={handleSubmit} className="space-y-4 bg-white p-6 rounded shadow-md" encType="multipart/form-data">
         <div>
           <label className="block text-sm font-medium text-gray-700">Product Name</label>
           <input
@@ -73,12 +83,12 @@ const EditProduct = () => {
           />
         </div>
         <div>
-          <label className="block text-sm font-medium text-gray-700">Image URL</label>
+          <label className="block text-sm font-medium text-gray-700">Upload Image</label>
           <input
-            type="text"
+            type="file"
             name="image"
-            value={product.image}
-            onChange={handleChange}
+            accept="image/*"
+            onChange={handleImageChange}
             className="w-full p-2 border rounded mt-1"
           />
         </div>

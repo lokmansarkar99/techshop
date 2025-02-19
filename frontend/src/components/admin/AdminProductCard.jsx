@@ -1,10 +1,11 @@
 import { FiEdit, FiTrash } from "react-icons/fi";
 
 const AdminProductCard = ({ product, onDelete, onEdit }) => {
+  const apiBaseUrl = import.meta.env.VITE_API_URL
   return (
     <div className="flex items-center p-4 bg-white shadow rounded-lg">
       <img
-        src={product.image}
+        src={`${apiBaseUrl}${product.image}`}
         alt={product.name}
         className="w-24 h-24 object-cover rounded-lg"
       />
