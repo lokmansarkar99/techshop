@@ -1,6 +1,6 @@
 import { RouterProvider, createBrowserRouter} from "react-router-dom";
 import AppLayout from "./layout/AppLayout";
-import Home from "./pages/Home";
+import Shop from "./pages/Shop";
 import ProductDetails from "./pages/ProductDetails";
 import Cart from "./pages/Cart";
 import Checkout from "./pages/Checkout";
@@ -15,6 +15,7 @@ import Products from "./pages/adminPages/Products";
 import AdminDashboard from "./pages/adminPages/AdminDashboard";
 import EditProduct from "./pages/adminPages/EditProduct";
 import AddProduct from "./components/admin/AddProduct";
+import Home from "./pages/Home";
 
 
 // const router = createBrowserRouter([
@@ -54,6 +55,7 @@ const router = createBrowserRouter([
     element: <AppLayout />, // Layout with Navbar & Footer
     children: [
       { path: "/", element: <Home /> },
+      { path: "/shop", element: <Shop /> },
       { path: "/product/:id", element: <ProductDetails /> },
       { path: "/cart", element: <Cart /> },
       { path: "/checkout", element: <Checkout /> },

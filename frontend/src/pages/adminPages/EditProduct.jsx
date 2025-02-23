@@ -10,6 +10,7 @@ const EditProduct = () => {
   const [product, setProduct] = useState({
     name: "",
     price: "",
+    description: ""
   });
   const [image, setImage] = useState(null);
   const [message, setMessage] = useState("");
@@ -21,7 +22,9 @@ const EditProduct = () => {
         setProduct({
           name: data.name,
           price: data.price,
+          description: data.description
         });
+        console.log(data)
       } catch (error) {
         console.error("Error fetching product:", error);
       }
@@ -30,8 +33,11 @@ const EditProduct = () => {
   }, [productId]);
 
   const handleChange = (e) => {
-    setProduct({ ...product, [e.target.name]: e.target.value });
+    const { name, value } = e.target;
+    setProduct((prev) => ({ ...prev, [name]: value }));
+    console.log("Updated Product:", { ...product, [name]: value }); 
   };
+  
 
   const handleImageChange = (e) => {
     setImage(e.target.files[0]);
@@ -44,6 +50,7 @@ const EditProduct = () => {
     const formData = new FormData();
     formData.append("name", product.name);
     formData.append("price", product.price);
+    formData.append("description", product.description);
     if (image) {
       formData.append("image", image);
     }
@@ -82,6 +89,20 @@ const EditProduct = () => {
             className="w-full p-2 border rounded mt-1"
           />
         </div>
+
+        <div className="mb-4">
+          <label className="block text-gray-700">Description</label>
+          <textarea
+          type="text"
+            value={product.description} 
+            name="description"
+            onChange={handleChange} 
+            className="w-full p-2 border rounded"
+            required
+          ></textarea>
+        </div>
+
+
         <div>
           <label className="block text-sm font-medium text-gray-700">Upload Image</label>
           <input

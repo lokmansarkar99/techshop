@@ -28,7 +28,7 @@ const Navbar = () => {
         {/* Navigation Links - Hidden on mobile */}
         <nav className="hidden md:flex space-x-6 text-gray-700 font-medium">
           <Link to="/" className="hover:text-blue-600">Home</Link>
-          <Link to="/categories" className="hover:text-blue-600">Categories</Link>
+          <Link to="/shop" className="hover:text-blue-600">Shop</Link>
           <Link to="/deals" className="hover:text-blue-600">Deals</Link>
           <Link to="/orders" className="hover:text-blue-600">Orders</Link>
         </nav>
